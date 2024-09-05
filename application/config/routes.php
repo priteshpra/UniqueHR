@@ -53,6 +53,8 @@ $route['404_override']             = '';
 // $route['default_controller'] = 'admin/usersession/adminlogin';
 $route['default_controller']     = 'Home';
 // $route['translate_uri_dashes'] 	= FALSE;
+// $route['admin'] = 'admin/$1';
+
 
 $route['admin-login']             = "admin/usersession/adminlogin";
 $route['notificationsetting']   = "admin/usersession/notification";
@@ -70,3 +72,15 @@ $route['project']             = "admin/project/project";
 
 $route['privacy_policy'] = 'admin/usersession/privacy_policy';
 $route['contact_us'] = 'admin/usersession/contact_us';
+
+
+
+$route['contact']  = 'contact';
+$route['privacy']  = 'privacy';
+$route['home']  = 'home/index';
+$route['(:any)']  = 'home/page';
+$route['blog/(:any)']  = 'blogs/detail/$1';
+
+
+$route['/(:any)']  = 'services/page';
+$route['/(:any)']  = 'industries/page';

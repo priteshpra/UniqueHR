@@ -10,91 +10,147 @@ class Contact extends CI_Controller
         $this->load->model('admin/brand_model');
         $this->load->model('admin/blog_model');
         $this->load->library('form_validation');
+        $this->load->library('recaptcha');
+        $this->load->library(array('session', 'form_validation', 'email'));
     }
 
     public function index()
     {
+
         $data = $formData = array();
-
-        // If contact request is submitted
-        if ($this->input->post('contactSubmit')) {
-            // Get the form data
-            $formData = $this->input->post();
-
-            // Form field validation rules
-            $this->form_validation->set_rules('name', 'Name', 'required');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-            $this->form_validation->set_rules('subject', 'Subject', 'required');
-            $this->form_validation->set_rules('message', 'Message', 'required');
-
-            // Validate submitted form data
-            if ($this->form_validation->run() == true) {
-
-                // Define email data
-                $mailData = array(
-                    'name' => $formData['name'],
-                    'email' => $formData['email'],
-                    'subject' => $formData['subject'],
-                    'message' => $formData['message']
-                );
-
-                // Send an email to the site admin
-                $send = $this->sendEmail($mailData);
-
-                // Check email sending status
-                if ($send) {
-                    // Unset form data
-                    $formData = array();
-
-                    $data['status'] = array(
-                        'type' => 'success',
-                        'msg' => 'Your contact request has been submitted successfully.'
-                    );
-                } else {
-                    $data['status'] = array(
-                        'type' => 'error',
-                        'msg' => 'Some problems occured, please try again.'
-                    );
-                }
-            }
-        }
+        $data['recaptcha_html'] = $this->recaptcha->getRecaptchaHtml();
 
         // Pass POST data to view
         $data['postData'] = $formData;
-
+        $data['menu'] = $menu = $this->common_model->getMenus();
         $data['page_name'] = 'Contact';
+
+        $data['metaKey'] = $this->common_model->getMenusMetaKey('Contact');
+        // echo "<pre>";
+        // print_r($data['metaKey']);
+        // die;
         $this->load->view('front/includes/header', $data);
         $this->load->view('front/contact', $data);
         $this->load->view('front/includes/footer');
     }
 
-    private function sendEmail($mailData)
+    public function sendEmail()
     {
         // Load the email library
         $this->load->library('email');
+        $this->form_validation->set_rules('con_firstname', 'First Name', 'required|alpha');
+        $this->form_validation->set_rules('con_lastname', 'Last Name', 'required|alpha');
+        $this->form_validation->set_rules('con_contact', 'Contact', 'required|numeric|exact_length[10]');
+        $this->form_validation->set_rules('con_email', 'Email', 'required|valid_email');
+        if (empty($_FILES['filename']['name'])) {
+            $this->form_validation->set_rules('filename', 'Document', 'required');
+        }
 
-        // Mail config
-        $to = 'recipient@gmail.com';
-        $from = 'info@unique-hr.com';
-        $fromName = 'unique HR';
-        $mailSubject = 'Contact Request Submitted by ' . $mailData['name'];
+        $mailData = $this->input->post();
 
-        // Mail content
-        $mailContent = '
-            <h2>Contact Request Submitted</h2>
-            <p><b>Name: </b>' . $mailData['name'] . '</p>
-            <p><b>Email: </b>' . $mailData['email'] . '</p>
-            <p><b>Subject: </b>' . $mailData['subject'] . '</p>
-            <p><b>Message: </b>' . $mailData['message'] . '</p>
-        ';
+        // Captcha validation
+        $recaptcha_response = $mailData['g-recaptcha-response'];
+        $response = $this->recaptcha->verifyResponse($recaptcha_response);
+        // print_r($response);
+        if ($this->form_validation->run() == FALSE || !$response['success']) {
 
-        $config['mailtype'] = 'html';
-        $this->email->initialize($config);
-        $this->email->to($to);
-        $this->email->from($from, $fromName);
-        $this->email->subject($mailSubject);
-        $this->email->message($mailContent);
+            $data['menu'] = $menu = $this->common_model->getMenus();
+            $data['page_name'] = 'Contact';
+            $data['recaptcha_error'] = $response['error-codes'][0];
+            $data['recaptcha_html'] = $this->recaptcha->getRecaptchaHtml();
+            $this->load->view('front/includes/header', $data);
+            $this->load->view('front/contact', $data);
+            $this->load->view('front/includes/footer');
+        } else {
 
-        return $this->email->send() ? true : false;
+            $this->load->helper('file');
+
+            $config['upload_path']   = 'assets/uploads/resume/';
+            $config['allowed_types'] = 'doc|docx|pdf';
+            $config['max_size']      = 10024;
+
+            $this->load->library('upload');
+
+            $this->upload->initialize($config);
+            //upload file to directory
+            if ($this->upload->do_upload('filename')) {
+
+                // $uploadData = $this->upload->data();
+                // $uploadedFile = $uploadData['filename'];
+                $uploadedFile = $this->upload->data('file_name');
+
+                // Define email data
+                $formData = array(
+                    'con_firstname' => $mailData['con_firstname'],
+                    'con_lastname' => $mailData['con_lastname'],
+                    'con_contact' => $mailData['con_contact'],
+                    'con_email' => $mailData['con_email'],
+                    'filename' => $uploadedFile,
+                    'con_intro' => $mailData['con_intro']
+                );
+            }
+            // Mail config
+            $to = HR_MAIL;
+            $from = $mailData['con_email'];
+            $fromName = $formData['con_firstname'] . ' ' . $formData['con_lastname'];
+            $mailSubject = 'Contact Request Submitted by ' . $formData['con_firstname'];
+
+            // Mail content
+            $mailContent = '
+    <h2>Contact Request Submitted</h2>
+    <p><b>First Name: </b>' . $formData['con_firstname'] . '</p>
+    <p><b>Last Name: </b>' . $formData['con_lastname'] . '</p>
+    <p><b>Contact Number: </b>' . $formData['con_contact'] . '</p>
+    <p><b>Email: </b>' . $formData['con_email'] . '</p>
+    <p><b>File Url: </b><a href="' . base_url("assets/uploads/resume/") . $formData["filename"] . '">' . $formData['filename'] . '</a></p>
+    <p><b>Message: </b>' . $formData['con_intro'] . '</p>
+';
+            $config = array(
+                'protocol'  => 'smtp',
+                'smtp_host' => 'smtpout.secureserver.net',
+                'smtp_port' => 465, // or 465 for SSL
+                'smtp_crypto' => 'ssl',
+                'smtp_user' => 'info@unique-hr.com',
+                'smtp_pass' => 'Guniquehr123',
+                'mailtype'  => 'html', // or 'text'
+                'charset'   => 'utf-8', // or
+                'wordwrap'  => TRUE,
+                'newline'   => "\r\n",                      // Ensure correct line endings
+                'crlf'      => "\r\n"
+            );
+            $this->email->initialize($config);
+            $this->email->to($to);
+            $this->email->from($from, $fromName);
+            $this->email->subject($mailSubject);
+            $this->email->message($mailContent);
+
+            $send =  $this->email->send() ? true : false;
+            if ($send) {
+                $formData = array();
+
+                $data['status'] = array(
+                    'type' => 'success',
+                    'msg' => 'Your contact request has been submitted successfully.'
+                );
+                $data['menu'] = $menu = $this->common_model->getMenus();
+                $data['page_name'] = 'Contact';
+                $data['recaptcha_html'] = $this->recaptcha->getRecaptchaHtml();
+                $this->load->view('front/includes/header', $data);
+                $this->load->view('front/contact', $data);
+                $this->load->view('front/includes/footer');
+            } else {
+                $data['status'] = array(
+                    'type' => 'error',
+                    'msg' => 'Some problems occured, please try again.'
+                );
+                $data['menu'] = $menu = $this->common_model->getMenus();
+                $data['page_name'] = 'Contact';
+                $data['recaptcha_error'] = $response['error-codes'][0];
+                $data['recaptcha_html'] = $this->recaptcha->getRecaptchaHtml();
+                $this->load->view('front/includes/header', $data);
+                $this->load->view('front/contact', $data);
+                $this->load->view('front/includes/footer');
+            }
+        }
     }
 }

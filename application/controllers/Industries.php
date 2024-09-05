@@ -9,100 +9,35 @@ class Industries extends CI_Controller
         parent::__construct();
         $this->load->model('admin/brand_model');
         $this->load->model('admin/cms_model');
+        $this->menu = $menu = $this->common_model->getMenus();
+        $this->load->model('admin/pagemaster_model');
+        $this->load->model('admin/common_model');
     }
-
-    public function manufacturer()
+    public function page()
     {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
+        $id = $this->uri->segment(2);
+        $pageName = $this->uri->segment(2);
 
-        $data['page_name'] = 'Manufacturer';
+        // $data['pagemaster'] = $pagemaster = $this->pagemaster_model->getPageMasterByID($id);
+        $page_id = $this->common_model->getPageIdData($pageName);
+        // echo "<pre>";
+        // print_r($pageName);
+        // die;
+        $data['menu'] = $menu = $this->common_model->getMenus();
+        $data['page_id'] = $page_id = isset($page_id[0]->PageID) ? $page_id[0]->PageID : 0;
+
+        $data['cms'] = $cms = $this->common_model->getCmsData($page_id);
+        $data['page_id'] = $page_id;
+        $data['banner'] = $banner = $this->common_model->getBannerData($page_id);
+
+
+        $data['page_name'] = ucfirst($pageName);
+        $data['metaKey'] = $this->common_model->getMenusSubMetaKey(ucfirst($pageName));
+        // echo "<pre>";
+        // print_r($data['metaKey']);
+        // die;
         $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/manufacturer', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function engineering()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Engineering';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/engineering', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function automation()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Automation';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/automation', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function software()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Software';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/software', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function bifs()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Banking,Finance, Insurance';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/bifs', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function bpo()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'BPO/KPO';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/bpo', $data);
-        $this->load->view('front/includes/footer');
-    }
-    public function healthcare()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Healthcare';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/healthcare', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function realestate()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Real Estate';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/industries/realestate', $data);
+        $this->load->view('front/industries/index', $data);
         $this->load->view('front/includes/footer');
     }
 }

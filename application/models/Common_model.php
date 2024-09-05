@@ -313,4 +313,111 @@ class Common_model extends CI_Model
         $query->next_result();
         return $query->result();
     }
+
+
+    public function getMenus()
+    {
+        $query = $this->db->query("SELECT C.CategoryID, C.CategoryName, P.PageID
+                                FROM ss_category C
+                                LEFT JOIN sssm_pagemaster P ON P.CategoryID = C.CategoryID
+                                WHERE C.Status = 1  GROUP BY C.CategoryName ORDER BY C.CategoryID ASC");
+        $catData = $query->result();
+
+        $query2 = $this->db->query("SELECT S.SubCategoryName, S.SubCategoryID, S.CategoryID, P.PageID
+                                    FROM ss_subcategory S
+                                    LEFT JOIN sssm_pagemaster P ON P.SubCategoryID = S.SubCategoryID
+                                    WHERE S.Status = 1 ORDER BY S.SubCategoryID ASC");
+        $subCat = $query2->result();
+
+        foreach ($catData as $key => $value) {
+            foreach ($subCat as $key => $menu) {
+                $menus['CategoryID'] = $value->CategoryID;
+                $menus['CategoryName'] = $value->CategoryName;
+                if ($value->CategoryID == $menu->CategoryID) {
+                    $menusc['SubCategoryID'] = $menu->SubCategoryID;
+                    $menusc['SubCategoryName'] = $menu->SubCategoryName;
+                    $menusc['PageID'] = $menu->PageID;
+                    $data[$value->CategoryName][] = $menusc;
+                }
+            }
+        }
+        $return = ['menus' => $catData, 'Submenus' => $data];
+        return $return;
+    }
+
+    public function getCmsData($ID)
+    {
+        $query = $this->db->query("SELECT C.PageID, C.Title, C.Content
+                                FROM sssm_cms C
+                                WHERE C.Status = 1 AND C.PageID = '$ID'");
+        $cms = $query->result();
+        return $cms;
+    }
+
+    public function getBannerData($ID)
+    {
+        $query = $this->db->query("SELECT C.BannerID, C.BannerTitle, C.SubTitle1, C.SubTitle2, C.SubTitle3, CONCAT('assets/uploads/banner/',C.Image) as Image
+                                FROM ss_banner C
+                                WHERE C.Status = 1 AND C.PageID = '$ID'");
+        $cms = $query->result();
+        return $cms;
+    }
+
+    public function getBlogsData()
+    {
+        $query = $this->db->query("SELECT C.BlogID, C.BlogTitle, C.AuthorName, C.PublishedDate, C.Content, C.Status
+                                FROM sssm_blogs C
+                                WHERE C.Status = 1");
+        $cms = $query->result();
+        return $cms;
+    }
+
+    public function getPageIdData($page)
+    {
+
+        $query = $this->db->query("SELECT C.PageID, C.PageName, C.CategoryID
+        FROM sssm_pagemaster C
+        WHERE C.Status = 1 AND LOWER(C.PageName) = '$page'");
+        $cms = $query->result();
+        return $cms;
+    }
+
+    public function getHomeData()
+    {
+        $query = $this->db->query("SELECT C.SectionID, C.PageID, C.SequenceNo, C.Content
+                                FROM sssm_sections C
+                                WHERE C.Status = 1 AND C.PageID = 1");
+        $section = $query->result();
+        return $section;
+    }
+
+    public function getBlogsDetail($name)
+    {
+        $query = $this->db->query("SELECT C.BlogID, C.BlogTitle, C.AuthorName, C.PublishedDate, C.Content, C.Status
+                                FROM sssm_blogs C
+                                WHERE C.Status = 1 AND LOWER(REPLACE(C.BlogTitle,' ', '-')) = '$name'");
+        $cms = $query->result();
+        return $cms;
+    }
+
+    public function getMenusMetaKey($pageName)
+    {
+
+        $query = $this->db->query("SELECT C.CategoryID, C.CategoryName,C.MetaKeyword, C.MetaDescription
+                                FROM ss_category C
+                                WHERE C.Status = 1 AND C.CategoryName = '$pageName'");
+        $catData = $query->result();
+
+        return $catData;
+    }
+
+    public function getMenusSubMetaKey($pageName)
+    {
+
+        $query2 = $this->db->query("SELECT S.SubCategoryName, S.SubCategoryID, S.CategoryID,S.MetaKeyword, S.MetaDescription
+                                    FROM ss_subcategory S
+                                    WHERE S.Status = 1  AND S.SubCategoryName ='$pageName' ");
+        $subCat = $query2->result();
+        return $subCat;
+    }
 }

@@ -1,43 +1,40 @@
 <script>
-    
-     $(document).ready(function () {
-       setTimeout(function(){ 
-    	$('#PageID').select2('open');
-    	 }, 1100);
-    <?php if (isset($this->session->userdata['posterror'])) {
-     echo "setTimeout(function(){ alertify.error('" . $this->session->userdata['posterror'] . " ')}, 2000);"; } 
-    ?>     
-    <?php if (isset($this->session->userdata['postsuccess'])) {
-     echo "setTimeout(function(){ alertify.success('" . $this->session->userdata['postsuccess'] . " ')}, 2000);"; } 
-    ?>   
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#PageID').select2('open');
+        }, 1100);
+        <?php if (isset($this->session->userdata['posterror'])) {
+            echo "setTimeout(function(){ alertify.error('" . $this->session->userdata['posterror'] . " ')}, 2000);";
+        }
+        ?>
+        <?php if (isset($this->session->userdata['postsuccess'])) {
+            echo "setTimeout(function(){ alertify.success('" . $this->session->userdata['postsuccess'] . " ')}, 2000);";
+        }
+        ?>
 
-            });
-/*Function For Buutoon click event */
+    });
+    /*Function For Buutoon click event */
 
-    $('#button_submit').on('click', function ()
-    {
+    $('#button_submit').on('click', function() {
         var error = checkValidations();
-		var field_ids = ['PageID'];
-        var combo_box_error = checkComboBox(field_ids);	
-		if (error === 'yes' || combo_box_error === 'yes')
-        {
+        var field_ids = ['PageID'];
+        var combo_box_error = checkComboBox(field_ids);
+        if (error === 'yes' || combo_box_error === 'yes') {
             alertify.error("<?php echo label('required_field'); ?>");
             return false;
-        }
-        else
-        {
+        } else {
             var page_content = tinyMCE.get('Content').getContent();
             if (page_content == '' || page_content == null) {
-                alertify.error("<?php echo label('msg_lbl_please_select_content_description');?>");
+                alertify.error("<?php echo label('msg_lbl_please_select_content_description'); ?>");
                 return false;
             }
             $('#button_submit').addClass('hide');
             $('#button_submit_loading').removeClass('hide');
-            alertify.success("<?php echo label('please_wait');?>");
+            alertify.success("<?php echo label('please_wait'); ?>");
             $('form').submit();
         }
     });
-    $(document).keypress(function (e) {
+    $(document).keypress(function(e) {
         if (e.which == 13) {
             $("#button_submit").click();
             return false;
@@ -66,6 +63,12 @@
         theme_advanced_toolbar_align: "left",
         theme_advanced_statusbar_location: "bottom",
         theme_advanced_resizing: true,
+        forced_root_block: false,
+        verify_html: false,
+        verify_css_classes: false,
+        cleanup: false,
+        cleanup_on_startup: false,
+        fix_list_elements: false,
         // Example content CSS (should be your site CSS)
         //content_css: "css/content.css",
         // Drop lists for link/image/media/template dialogs
@@ -74,14 +77,42 @@
         external_image_list_url: "lists/image_list.js",
         media_external_list_url: "lists/media_list.js",
         // Style formats
-        style_formats: [
-            {title: 'Bold text', inline: 'b'},
-            {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
-            {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
-            {title: 'Example 1', inline: 'span', classes: 'example1'},
-            {title: 'Example 2', inline: 'span', classes: 'example2'},
-            {title: 'Table styles'},
-            {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+        style_formats: [{
+                title: 'Bold text',
+                inline: 'b'
+            },
+            {
+                title: 'Red text',
+                inline: 'span',
+                styles: {
+                    color: '#ff0000'
+                }
+            },
+            {
+                title: 'Red header',
+                block: 'h1',
+                styles: {
+                    color: '#ff0000'
+                }
+            },
+            {
+                title: 'Example 1',
+                inline: 'span',
+                classes: 'example1'
+            },
+            {
+                title: 'Example 2',
+                inline: 'span',
+                classes: 'example2'
+            },
+            {
+                title: 'Table styles'
+            },
+            {
+                title: 'Table row 1',
+                selector: 'tr',
+                classes: 'tablerow1'
+            }
         ],
         // Replace values for the template plugin
         template_replace_values: {

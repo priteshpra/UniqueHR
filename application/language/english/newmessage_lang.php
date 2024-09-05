@@ -743,7 +743,7 @@ $lang['msg_lbl_title_banner'] = 'Banners';
 $lang['msg_lbl_subtitle1'] = 'SubTitle One';
 $lang['msg_lbl_subtitle2'] = 'SubTitle Two';
 $lang['msg_lbl_subtitle3'] = 'SubTitle Three';
-$lang['msg_lbl_sequence'] = 'Sequence';
+$lang['msg_lbl_sequence'] = 'Sequence No';
 $lang['msg_lbl_pagenumber'] = 'Page ID';
 
 $lang['msg_lbl_title_brand'] = 'Brands';
@@ -764,3 +764,9 @@ $lang['msg_lbl_authorname'] = 'Author Name';
 $lang['msg_lbl_publishdate'] = 'Publish Date';
 
 $lang['msg_lbl_title_job'] = 'Job Posting';
+
+
+$lang['msg_lbl_title_test'] = 'Testimonials';
+$lang['msg_lbl_pagenametest'] = "Name";
+$lang['msg_lbl_designation'] = "Designation";
+$lang['msg_lbl_title_section'] = "Section";

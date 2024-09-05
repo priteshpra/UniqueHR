@@ -9,77 +9,35 @@ class Services extends CI_Controller
         parent::__construct();
         $this->load->model('admin/brand_model');
         $this->load->model('admin/cms_model');
+        $this->load->model('admin/pagemaster_model');
+        $this->load->model('admin/common_model');
     }
 
-    public function recruitment()
+    public function page()
     {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
+        $id = $this->uri->segment(2);
+        $pageName = $this->uri->segment(2);
+        // $data['pagemaster'] = $pagemaster = $this->pagemaster_model->getPageMasterByID($id);
+        $page_id = $this->common_model->getPageIdData($pageName);
 
-        $data['page_name'] = 'Recruitment';
+        $data['menu'] = $menu = $this->common_model->getMenus();
+        $data['page_id'] = $page_id = isset($page_id[0]->PageID) ? $page_id[0]->PageID : 0;
+
+        $data['cms'] = $cms = $this->common_model->getCmsData($page_id);
+        // print_r($cms);
+        // die;
+        $data['page_id'] = $page_id;
+        $data['banner'] = $banner = $this->common_model->getBannerData($page_id);
+
+
+        $data['page_name'] = ucfirst($pageName);
+        $data['metaKey'] = $this->common_model->getMenusSubMetaKey(ucfirst($pageName));
+        // echo "<pre>";
+        // print_r($data['metaKey']);
+        // die;
         $this->load->view('front/includes/header', $data);
-        $this->load->view('front/services/recruitment', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function candidatescreening()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Candidate Screening';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/services/candidatescreening', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function shortlisting()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Short Listing';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/services/shortlisting', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function referencechecks()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Reference Checks';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/services/referencechecks', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function interviewcoordination()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Interview Coordination';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/services/interviewcoordination', $data);
-        $this->load->view('front/includes/footer');
-    }
-
-    public function postplacementsupport()
-    {
-        $data['brandList'] = $this->brand_model->ListData(100, 1);
-        $ID = ABOUT_ID;
-        $data['cms'] = $this->cms_model->getCmsByID($ID);
-
-        $data['page_name'] = 'Post Placement Support';
-        $this->load->view('front/includes/header', $data);
-        $this->load->view('front/services/postplacementsupport', $data);
+        // $this->load->view('front/index', $data);
+        $this->load->view('front/services/index', $data);
         $this->load->view('front/includes/footer');
     }
 }

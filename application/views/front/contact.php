@@ -26,21 +26,21 @@
                  <div class="icon_box_10">
                      <div class="ib_box"><i class="icons-location-pin"></i></div>
                      <h3>Office Address:</h3>
-                     <p>C-402,4th Floor, Sumel Business Park-7,<br> N.H.NO-8,Soni Ki Chawl,Odhav,Ahmedabad-382415</p>
+                     <p>C-402, 4th Floor, <br> Sumel Business Park-7, N.H.NO-8, <br> Soni Ki Chawl, Odhav,<br> Ahmedabad- 382415</p>
                  </div>
              </div>
              <div class="col-lg-4 col-md-6">
                  <div class="icon_box_10">
                      <div class="ib_box"><i class="icons-telephone"></i></div>
                      <h3>Call Us For Help:</h3>
-                     <p>91 73833 57731,<br> +91 70696 90700</p>
+                     <p><a href="tel:+917069690700">+91 70696 90700</a></p>
                  </div>
              </div>
              <div class="col-lg-4 col-md-6">
                  <div class="icon_box_10">
                      <div class="ib_box"><i class="icons-envelope-1"></i></div>
                      <h3>Mail info:</h3>
-                     <p>contact@unique-hr.com<br> info@unique-hr.com</p>
+                     <p>info@unique-hr.com</p>
                  </div>
              </div>
          </div>
@@ -52,52 +52,55 @@
  <section class="contactSection">
      <div class="container largeContainer">
          <div class="row">
-             <div class="col-md-8">
+             <div class="col-md-12">
                  <div class="appointment_form">
-                     <?php if (!empty($status)) { ?>
-                         <div class="status <?php echo $status['type']; ?>"><?php echo $status['msg']; ?></div>
+                     <?php
+                        if (!empty($status)) { ?>
+                         <div style="color: green; font-size:25px" class="status <?php echo $status['type']; ?>"><?php echo $status['msg']; ?></div>
                      <?php } ?>
                      <p>Your email address will not be published*</p>
                      <h3>Send Us a Message</h3>
-                     <form action="" method="POST" class="row" id="">
+                     <form action="<?php echo base_url('contact/sendEmail') ?>" method="post" class="row" id="contact_forms" enctype="multipart/form-data">
                          <div class="input-field col-md-6">
-                             <i class="twi-user2"></i>
-                             <input class="required" type="text" name="name" value="<?php echo !empty($postData['name']) ? $postData['name'] : ''; ?>" placeholder="Your Name">
-                             <?php echo form_error('name', '<p class="field-error">', '</p>'); ?>
+                             <input class="required" type="text" name="con_firstname" placeholder="First Name" tabindex="1">
+                             <span style="color: red;"><?php echo form_error('con_firstname'); ?></span>
                          </div>
                          <div class="input-field col-md-6">
-                             <i class="twi-envelope2"></i>
-                             <input class="required" type="email" name="email" value="<?php echo !empty($postData['email']) ? $postData['email'] : ''; ?>" placeholder="Email Address">
-                             <?php echo form_error('email', '<p class="field-error">', '</p>'); ?>
+                             <input class="required" type="text" name="con_lastname" placeholder="Last Name" tabindex="2">
+                             <span style="color: red;"><?php echo form_error('con_lastname'); ?></span>
                          </div>
-                         <div class="input-field icRight col-md-12">
-                             <select name="subject">
-                                 <option>Select Subjects</option>
-                                 <option>Finance Consultant</option>
-                                 <option>Business Consultant</option>
-                                 <option>Financial Advices</option>
-                                 <option>Business Growth</option>
-                             </select>
+                         <div class="input-field col-md-6">
+                             <input class="required" type="text" name="con_contact" id="con_contact" placeholder="Contact Number" tabindex="3">
+                             <span style="color: red;"><?php echo form_error('con_contact'); ?></span>
+                         </div>
+                         <div class="input-field col-md-6">
+                             <input class="required" type="email" name="con_email" id="con_email" placeholder="Email Address" tabindex="4">
+                             <span style="color: red;"><?php echo form_error('con_email'); ?></span>
                          </div>
                          <div class="input-field col-md-12">
-                             <i class="twi-pen2"></i>
-                             <textarea class="required" name="message" placeholder="Type Your Message"><?php echo !empty($postData['message']) ? $postData['message'] : ''; ?></textarea>
-                             <?php echo form_error('message', '<p class="field-error">', '</p>'); ?>
-                         </div>
-                         <div class="col-md-7 input-field">
-                             <label>
-                                 <input type="checkbox" name="subscribe" value="Also subscribe us">
-                                 <span class="wpcf7-list-item-label">I Agree to get-e- mails about future conferences.</span>
-                             </label>
+                             <input type="file" id="con_cv" accept=".doc,.docx,.pdf" name="filename" tabindex="6">
+                             <span style="color: red;"><?php echo form_error('filename'); ?></span>
                          </div>
                          <div class="input-field col-md-12">
-                             <button type="submit" name="contactSubmit" class="qu_btn" value="Submit">Submit Now</button>
+                             <p style="margin-bottom:20px;"></p>
+                         </div>
+                         <div class="input-field col-md-12">
+                             <textarea class="required" name="con_intro" placeholder="Brief Introduction" tabindex="5"></textarea>
+                         </div>
+                         <?php echo $recaptcha_html; ?>
+                         <span style="color: red;"><?php echo form_error('g-recaptcha-response'); ?></span>
+
+                         <div class="input-field col-md-12" style="margin-top:15px;">
+                             <?php if (isset($recaptcha_error)) {
+                                    echo '<p style="color: red;">' . $recaptcha_error . '</p>';
+                                } ?>
+                             <input type="submit" name="contactSubmit" class="frm-submit qu_btn" value="SUBMIT">
                              <div class="con_message"></div>
                          </div>
                      </form>
                  </div>
              </div>
-             <div class="col-md-4">
+             <div class="col-md-4" style="display:none;">
                  <div class="chatNow">
                      <h4>Chat With Support</h4>
                      <p>Let’s chat our live experts to get answer your question</p>
@@ -114,3 +117,4 @@
      <div class="google_map" id="google_map"></div>
  </section>
  <!-- Contact Map End -->
+ <script src="https://www.google.com/recaptcha/api.js" async defer></script>

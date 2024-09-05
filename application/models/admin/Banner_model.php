@@ -15,7 +15,7 @@ class Banner_model extends CI_Model
     public function listData($per_page_record = 10, $page_number = 1)
     {
         $BannerTitle = getStringClean(($this->input->post('BannerTitle') != '') ? $this->input->post('BannerTitle') : '');
-        $SubTitle = getStringClean(($this->input->post('SubTitle') != '') ? $this->input->post('SubTitle') : '');
+        $SubTitle1 = getStringClean(($this->input->post('SubTitle1') != '') ? $this->input->post('SubTitle1') : '');
         $Type = getStringClean(($this->input->post('Type') != '') ? $this->input->post('Type') : '');
         $status_search_value = ($this->input->post('Status_search') != '') ? $this->input->post('Status_search') : -1;
 
@@ -35,10 +35,10 @@ class Banner_model extends CI_Model
     public function insert($banner_array)
     {
         $banner_array['BannerTitle']   =   getStringClean((isset($banner_array['BannerTitle'])) ? $banner_array['BannerTitle'] : NULL);
-        $banner_array['SubTitle']    = getStringClean((isset($banner_array['SubTitle'])) ? $banner_array['SubTitle'] : NULL);
-        $banner_array['Sequence'] = (isset($banner_array['Sequence'])) ? $banner_array['Sequence'] : 0;
+        $banner_array['SubTitle1']    = getStringClean((isset($banner_array['SubTitle1'])) ? $banner_array['SubTitle1'] : NULL);
+        $banner_array['SequenceNo'] = (isset($banner_array['SequenceNo'])) ? $banner_array['SequenceNo'] : 0;
         $banner_array['IsCreative'] = (isset($banner_array['IsCreative']) && $banner_array['IsCreative'] == 'on') ? ACTIVE : INACTIVE;
-        $banner_array['image'] = getStringClean((isset($banner_array['image'])) ? $banner_array['image'] : NULL);
+        $banner_array['Image'] = getStringClean((isset($banner_array['Image'])) ? $banner_array['Image'] : NULL);
         $banner_array['mobileimage'] = getStringClean((isset($banner_array['mobileimage'])) ? $banner_array['mobileimage'] : NULL);
         $banner_array['Type']        =   getStringClean((isset($banner_array['Type'])) ? $banner_array['Type'] : NULL);
         $banner_array['RedirectURL'] = getStringClean((isset($banner_array['RedirectURL'])) ? $banner_array['RedirectURL'] : NULL);
@@ -50,17 +50,16 @@ class Banner_model extends CI_Model
 
         $sql = "call usp_A_AddBanner('" .
             $banner_array['BannerTitle'] . "','" .
-            $banner_array['SubTitle'] . "','" .
-            $banner_array['Sequence'] . "','" .
-            $banner_array['IsCreative'] . "','" .
-            $banner_array['image'] . "','" .
-            $banner_array['mobileimage'] . "','" .
-            $banner_array['Type'] . "','" .
-            $banner_array['RedirectURL'] . "','" .
+            $banner_array['PageID'] . "','" .
+            $banner_array['SubTitle1'] . "','" .
+            $banner_array['SubTitle2'] . "','" .
+            $banner_array['SubTitle3'] . "','" .
             $banner_array['created_by'] . "','" .
             $banner_array['Status'] . "','" .
             $banner_array['usertype'] . "','" .
-            $banner_array['IPAddress'] . "')";
+            $banner_array['IPAddress'] . "','" .
+            $banner_array['Image'] . "','" .
+            $banner_array['SequenceNo'] . "')";
         $query = $this->db->query($sql);
         $query->next_result();
         return $query->row();
@@ -70,10 +69,10 @@ class Banner_model extends CI_Model
     {
         //pr($banner_array);exit;
         $banner_array['BannerTitle']   =   getStringClean((isset($banner_array['BannerTitle'])) ? $banner_array['BannerTitle'] : NULL);
-        $banner_array['SubTitle']    = getStringClean((isset($banner_array['SubTitle'])) ? $banner_array['SubTitle'] : NULL);
-        $banner_array['Sequence'] = (isset($banner_array['Sequence'])) ? $banner_array['Sequence'] : 0;
+        $banner_array['SubTitle1']    = getStringClean((isset($banner_array['SubTitle1'])) ? $banner_array['SubTitle1'] : NULL);
+        $banner_array['SequenceNo'] = (isset($banner_array['SequenceNo'])) ? $banner_array['SequenceNo'] : 0;
         $banner_array['IsCreative'] = (isset($banner_array['IsCreative']) && $banner_array['IsCreative'] == 'on') ? ACTIVE : INACTIVE;
-        $banner_array['image'] = getStringClean((isset($banner_array['image'])) ? $banner_array['image'] : NULL);
+        $banner_array['Image'] = getStringClean((isset($banner_array['Image'])) ? $banner_array['Image'] : NULL);
         $banner_array['mobileimage'] = getStringClean((isset($banner_array['mobileimage'])) ? $banner_array['mobileimage'] : NULL);
         $banner_array['Type']        =   getStringClean((isset($banner_array['Type'])) ? $banner_array['Type'] : NULL);
         $banner_array['RedirectURL'] = getStringClean((isset($banner_array['RedirectURL'])) ? $banner_array['RedirectURL'] : NULL);
@@ -85,7 +84,8 @@ class Banner_model extends CI_Model
 
 
         $sql = "call usp_A_EditBanner('" .
-            $banner_array['BannerTitle'] . "','" . $banner_array['SubTitle'] . "','" . $banner_array['Sequence'] . "','" . $banner_array['IsCreative'] . "','" . $banner_array['image'] . "','" . $banner_array['mobileimage'] . "','" . $banner_array['Type'] . "','" . $banner_array['RedirectURL'] . "','" . $banner_array['modified_by'] . "','" . $banner_array['Status'] . "','" . $banner_array['ID'] . "','" . $banner_array['usertype'] . "','" . $banner_array['IPAddress'] . "')";
+            $banner_array['BannerTitle'] . "','" . $banner_array['PageID'] . "','" . $banner_array['SubTitle1'] . "','" . $banner_array['SubTitle2'] . "','" . $banner_array['SubTitle3'] . "','" . $banner_array['modified_by'] . "','" . $banner_array['Status'] . "','" . $banner_array['ID'] . "','" . $banner_array['usertype'] . "','" . $banner_array['IPAddress'] . "','" . $banner_array['Image'] . "','" . $banner_array['SequenceNo'] . "')";
+
         $query = $this->db->query($sql);
         $query->next_result();
         return $query->row();

@@ -8,7 +8,7 @@
  License:
  License URI:
 */
- 
+
 /*=======================================================================
  [Table of contents]
  =========================================================================
@@ -33,17 +33,17 @@
     /*--------------------------------------------------------
     / 1. Init Obj
     /---------------------------------------------------------*/
-    var folioSlider01           = $('.folioSlider01'),
-        folioSlider02           = $('.folioSlider02'),
-        testi_slider01          = $('.testimonialslider01'),
-        testi_slider02          = $('.testimonialslider02'),
-        helpSlider              = $('.helpSlider'),
-        chooseSlider            = $('.chooseSlider'),
-        popup_video             = $('.popup_video'),
-        popup_img               = $('.popup_img'),
-        funfact                 = $('.funfact'),
-        select                  = $('.input-field select');
-    
+    var folioSlider01 = $('.folioSlider01'),
+        folioSlider02 = $('.folioSlider02'),
+        testi_slider01 = $('.testimonialslider01'),
+        testi_slider02 = $('.testimonialslider02'),
+        helpSlider = $('.helpSlider'),
+        chooseSlider = $('.chooseSlider'),
+        popup_video = $('.popup_video'),
+        popup_img = $('.popup_img'),
+        funfact = $('.funfact'),
+        select = $('.input-field select');
+
     /*--------------------------------------------------------
     / 2. Rev Slider
     /---------------------------------------------------------*/
@@ -107,7 +107,7 @@
                     h_align: "right",
                     v_align: "center",
                     h_offset: -80,
-                    v_offset: 47 
+                    v_offset: 47
                 },
                 right: {
                     container: "layergrid",
@@ -190,7 +190,7 @@
         });
     }
     /*--- Testimonial Silder ---*/
-    if(testi_slider01.length > 0){
+    if (testi_slider01.length > 0) {
         var testi_slider01_obj = testi_slider01.owlCarousel({
             autoplay: false,
             loop: false,
@@ -214,7 +214,7 @@
             }
         });
     }
-    if(testi_slider02.length > 0){
+    if (testi_slider02.length > 0) {
         var testi_slider02_obj = testi_slider02.owlCarousel({
             autoplay: true,
             loop: true,
@@ -229,10 +229,10 @@
             items: 1,
         });
     }
-    
+
     /*--- Client Silder ---*/
-    if($(".client-slider").length > 0){
-       $('.client-slider').owlCarousel({
+    if ($(".client-slider").length > 0) {
+        $('.client-slider').owlCarousel({
             autoplay: true,
             loop: true,
             margin: 30,
@@ -260,8 +260,8 @@
         animateOut: 'slideOutDown',
         animateIn: 'flipInX',
         smartSpeed: 350,
-        items:1,
-        margin:0,
+        items: 1,
+        margin: 0,
         dots: false,
         loop: true,
         nav: true,
@@ -273,31 +273,31 @@
         animateOut: 'slideOutDown',
         animateIn: 'zoomIn',
         smartSpeed: 350,
-        items:1,
-        margin:0,
+        items: 1,
+        margin: 0,
         dots: false,
         loop: true,
         nav: true,
         navText: ['<i class="twi-arrow-left1"></i>', '<i class="twi-arrow-right1"></i>'],
     });
-    
+
     /*--------------------------------------------------------
     / 3. Skills
     /----------------------------------------------------------*/
-    if ($(".single_skill").length > 0){
+    if ($(".single_skill").length > 0) {
         $('.single_skill').appear();
         $('.single_skill').on('appear', loadSkills);
     }
     var coun = true;
-    function loadSkills(){
+    function loadSkills() {
         $(".single_skill").each(function () {
             var datacount = $(this).attr("data-parcent");
-            $(".ss_child", this).animate({'width': datacount + '%'}, 2000);
-            $(".ss_parent span", this).animate({'left': datacount + '%'}, 2000);
-            if (coun){
+            $(".ss_child", this).animate({ 'width': datacount + '%' }, 2000);
+            $(".ss_parent span", this).animate({ 'left': datacount + '%' }, 2000);
+            if (coun) {
                 $(this).find('.ss_parent span').each(function () {
                     var $this = $(this);
-                    $({Counter: 0}).animate({Counter: datacount}, {
+                    $({ Counter: 0 }).animate({ Counter: datacount }, {
                         duration: 2000,
                         easing: 'swing',
                         step: function () {
@@ -325,10 +325,10 @@
                         $(this).circleProgress({
                             value: pint,
                             startAngle: -Math.PI / 3 * 1,
-                            fill: {gradient: [[grs, 1], [gre, .2]], gradientAngle: Math.PI / 4 * 2},
+                            fill: { gradient: [[grs, 1], [gre, .2]], gradientAngle: Math.PI / 4 * 2 },
                             lineCap: 'square',
                             thickness: 4,
-                            animation: {duration: 1800},
+                            animation: { duration: 1800 },
                             size: 73,
                             emptyFill: bg
                         }).on('circle-animation-progress', function (event, progress) {
@@ -340,39 +340,39 @@
             });
         }
     });
-    
+
     /*--------------------------------------------------------
     / 4. Fun Fact Count
     /---------------------------------------------------------*/
     $('.counter').appear();
-    $(document.body).on('appear', '.counter', function(e, $affected) {
-        $affected.each(function() {
+    $(document.body).on('appear', '.counter', function (e, $affected) {
+        $affected.each(function () {
             var $this = $(this);
-            if(!$this.hasClass('completed')){
+            if (!$this.hasClass('completed')) {
                 var $this = $(this);
                 var datacount = $(this).attr("data-count") * 1;
-                if(datacount > 1000 && datacount % 1000 != 0){
+                if (datacount > 1000 && datacount % 1000 != 0) {
                     var count = datacount / 1000;
                     count = count.toFixed(1);
-                    $({Counter: 0}).animate({Counter: count}, {
+                    $({ Counter: 0 }).animate({ Counter: count }, {
                         duration: 3000,
                         easing: 'swing',
                         step: function () {
                             $this.text(this.Counter.toFixed(1));
                         }
                     });
-                }else if(datacount >= 1000  && datacount % 1000 == 0){
+                } else if (datacount >= 1000 && datacount % 1000 == 0) {
                     var count = datacount / 1000;
-                    $({Counter: 0}).animate({Counter: count}, {
+                    $({ Counter: 0 }).animate({ Counter: count }, {
                         duration: 3000,
                         easing: 'swing',
                         step: function () {
                             $this.text(Math.ceil(this.Counter));
                         }
                     });
-                }else{
+                } else {
                     var count = datacount;
-                    $({Counter: 0}).animate({Counter: count}, {
+                    $({ Counter: 0 }).animate({ Counter: count }, {
                         duration: 3000,
                         easing: 'swing',
                         step: function () {
@@ -384,7 +384,7 @@
             }
         });
     });
-    
+
     /*--------------------------------------------------------
     / 5. Back To Top
     /---------------------------------------------------------*/
@@ -392,17 +392,17 @@
         body = $("body, html");
     $(window).on('scroll', function () {
         if ($(window).scrollTop() > $(window).height()) {
-            back.css({bottom: '30px', opacity: '1', visibility: 'visible'});
+            back.css({ bottom: '30px', opacity: '1', visibility: 'visible' });
         } else {
-            back.css({bottom: '-30px', opacity: '0', visibility: 'hidden'});
+            back.css({ bottom: '-30px', opacity: '0', visibility: 'hidden' });
         }
     });
     body.on("click", "#backtotop", function (e) {
         e.preventDefault();
-        body.animate({scrollTop: 0}, 800);
+        body.animate({ scrollTop: 0 }, 800);
         return false;
     });
-    
+
     /*--------------------------------------------------------
     / 6. All PopUP
     /--------------------------------------------------------*/
@@ -431,21 +431,21 @@
         e.preventDefault();
         $(this).parent().toggleClass('active');
     });
-    
+
     /*--------------------------------------------------------
     / 7. Sticky Header
     /---------------------------------------------------------*/
-    if($(".isSticky").length > 0){
+    if ($(".isSticky").length > 0) {
         var header_height = $(".isSticky").height();
-        $(window).on('scroll', function(){
-            if($(window).scrollTop() > 300){
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 300) {
                 $(".isSticky").addClass('fixedHeader animated slideInDown');
-            }else{
+            } else {
                 $(".isSticky").removeClass('fixedHeader animated slideInDown');
             }
         });
     }
-    
+
     /*--------------------------------------------------------
     / 8. Mobile Menu
     /---------------------------------------------------------*/
@@ -463,7 +463,7 @@
         $(this).parent('li.menu-item-has-children').toggleClass('active');
         $(this).siblings('ul.sub-menu').slideToggle();
     });
-    
+
     /*--------------------------------------------------------
     / 9. Preloader
     /---------------------------------------------------------*/
@@ -481,27 +481,27 @@
         select.niceSelect();
         select.parent().addClass('select-area');
     };
-    
+
     /*--------------------------------------------------------
     / 11. Google Maps
     /----------------------------------------------------------*/
-    if ($("#google_map").length > 0){
+    if ($("#google_map").length > 0) {
         var map;
         map = new GMaps({
             el: "#google_map",
-            lat: -37.815340,
-            lng: 144.963230,
-            zoom: 10,
+            lat: 23.0340059,
+            lng: 72.6028329,
+            zoom: 12,
         });
         var image = "";
         map.addMarker({
-            lat: -37.815340,
-            lng: 144.963230,
-            icon: "assets/images/marker.png",
+            lat: 23.0340059,
+            lng: 72.6028329,
+            icon: "assets/front/images/marker.png",
             animation: google.maps.Animation.DROP,
-            title: 'WH. Center',
+            title: 'Sumel Business Park-7',
             infoWindow: {
-                content: '<p><span>WH. Center</span>30 Memorial Drive, Avon MA 2322</p>'
+                content: '<p><span>C-402, 4th Floor,</span>Sumel Business Park-7, N.H.NO-8,Soni Ki Chawl, Odhav,Ahmedabad- 382415</p>'
             },
             verticalAlign: "bottom",
             horizontalAlign: "center",
@@ -511,34 +511,34 @@
             {
                 "featureType": "road",
                 "stylers": [
-                    {"color": "#fde293"}
+                    { "color": "#fde293" }
                 ]
             }, {
                 "featureType": "water",
                 "stylers": [
-                    {"color": "#9cc0f9"}
+                    { "color": "#9cc0f9" }
                 ]
             }, {
                 "featureType": "landscape",
                 "stylers": [
-                    {"color": "#f4f5f6"}
+                    { "color": "#f4f5f6" }
                 ]
             }, {
                 "elementType": "labels.text.fill",
                 "stylers": [
-                    {"color": "#2c2c2c"}
+                    { "color": "#2c2c2c" }
                 ]
             }, {
                 "featureType": "poi",
                 "stylers": [
-                    {"color": "#9cc0f9"}
+                    { "color": "#9cc0f9" }
                 ]
             }, {
                 "elementType": "labels.text",
                 "stylers": [
-                    {"saturation": 1},
-                    {"weight": 0.1},
-                    {"color": "#2c2c2c"}
+                    { "saturation": 1 },
+                    { "weight": 0.1 },
+                    { "color": "#2c2c2c" }
                 ]
             }
 
@@ -555,6 +555,17 @@
     /*--------------------------------------------------------
     / 12. Contact Form Submission
     /---------------------------------------------------------*/
+    $('#con_email').blur(function () {
+        var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+        if (testEmail.test(this.value)) $(this).addClass('req');
+        else $(this).addClass('reqError');
+    });
+
+    $('#con_phone').blur(function () {
+        var testEmail = /^(\d{3})(\d{3})(\d+)$/i;
+        if (testEmail.test(this.value)) $(this).addClass('req');
+        else $(this).addClass('reqError');
+    });
     $('#contact_form').on('submit', function (e) {
         e.preventDefault();
         var $this = $(this);
@@ -562,15 +573,13 @@
         var form_data = $this.serialize();
         var required = 0;
         $(".required", this).each(function () {
-            if ($(this).val() === ''){
+            if ($(this).val() === '') {
                 $(this).addClass('reqError');
                 required += 1;
-            } else{
-                if ($(this).hasClass('reqError'))
-                {
+            } else {
+                if ($(this).hasClass('reqError')) {
                     $(this).removeClass('reqError');
-                    if (required > 0)
-                    {
+                    if (required > 0) {
                         required -= 1;
                     }
                 }
@@ -579,8 +588,8 @@
         if (required === 0) {
             $.ajax({
                 type: 'POST',
-                url: 'mail/mail.php',
-                data: {form_data: form_data},
+                url: 'home/sendEmail',
+                data: { form_data: form_data },
                 success: function (data) {
                     $('button[type="submit"]', $this).removeAttr('disabled').val('Message');
 
@@ -606,8 +615,7 @@
     / 13. All Filter & Suffle
     /---------------------------------------------------------*/
     $(window).on('load', function () {
-        if ($(".shaff_grid").length > 0)
-        {
+        if ($(".shaff_grid").length > 0) {
             var $grid = $('.shaff_grid');
             $grid.shuffle({
                 itemSelector: '.shaff_item',

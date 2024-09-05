@@ -18,17 +18,17 @@
                         </div>
                         <div class="input-field col s6">
                             <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_select_subtitle1'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
-                            <input id="SubTitle1" name="SubTitle1" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$banner->SubTitle; ?>" maxlength="100" />
+                            <input id="SubTitle1" name="SubTitle1" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$banner->SubTitle1; ?>" maxlength="100" />
                             <label for="SubTitle1"><?php echo label('msg_lbl_subtitle1') ?></label>
                         </div>
                         <div class="input-field col s6">
                             <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_select_subtitle'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
-                            <input id="SubTitle2" name="SubTitle2" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$banner->SubTitle2; ?>" maxlength="100" />
+                            <input id="SubTitle2" name="SubTitle2" type="text" class=" LetterOnly" value="<?php echo @$banner->SubTitle2; ?>" maxlength="100" />
                             <label for="SubTitle2"><?php echo label('msg_lbl_subtitle2') ?></label>
                         </div>
                         <div class="input-field col s6">
                             <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_select_subtitle'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
-                            <input id="SubTitle3" name="SubTitle3" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$banner->SubTitle3; ?>" maxlength="100" />
+                            <input id="SubTitle3" name="SubTitle3" type="text" class=" LetterOnly" value="<?php echo @$banner->SubTitle3; ?>" maxlength="100" />
                             <label for="SubTitle3"><?php echo label('msg_lbl_subtitle3') ?></label>
                         </div>
                         <div class="input-field col s6">

@@ -243,6 +243,18 @@ define('JOBPOST_THUMB_UPLOAD_PATH',    './assets/uploads/jobpost/thumbnail/');
 define('JOBPOST_THUMB_MAX_WIDTH',    250);
 define('JOBPOST_THUMB_MAX_HEIGHT',    250);
 
+define('TESTIMONIAL_MAX_HEIGHT',        -1);
+define('TESTIMONIAL_MAX_WIDTH',            -1);
+define('TESTIMONIAL_MAX_SIZE',            102400);
+define('TESTIMONIAL_ALLOWED_TYPES',        'gif|jpg|png|jpeg');
+define('TESTIMONIAL_UPLOAD_PATH',        './assets/uploads/testimonial/');
+define('TESTIMONIAL_THUMB_UPLOAD_PATH',    './assets/uploads/testimonial/thumbnail/');
+define('TESTIMONIAL_THUMB_MAX_WIDTH',    250);
+define('TESTIMONIAL_THUMB_MAX_HEIGHT',    250);
+
 define('BLOG_ID', 5);
 define('ABOUT_ID', 3);
 define('PRIVACY_ID', 6);
+
+define('HR_MAIL', 'info@unique-hr.com');
+// define('HR_MAIL', 'priteshp.sandvirp@gmail.com');

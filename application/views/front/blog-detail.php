@@ -8,7 +8,7 @@
 
         </div>
         <div class="row">
-            <div class="banner-subtitle">Human Resources Trends in India 2024</div>
+            <div class="banner-subtitle"><?php echo $Blog[0]->BlogTitle ?></div>
         </div>
     </div>
 </section>
@@ -22,11 +22,11 @@
                 <div class="sic_details clearfix">
                     <div class="bmeta">
                         <p><i class="twi-folder2"></i>Data Analytics</p>
-                        <p><i class="twi-user2"></i><?php echo $Blog->AuthorName ?></p>
-                        <p><i class="twi-calendar-alt2"></i><?php echo date('d M Y', strtotime($Blog->PublishedDate)) ?></p>
+                        <p><i class="twi-user2"></i><?php echo $Blog[0]->AuthorName ?></p>
+                        <p><i class="twi-calendar-alt2"></i><?php echo date('d M Y', strtotime($Blog[0]->PublishedDate)) ?></p>
                     </div>
                     <div class="sic_the_content clearfix">
-                        <?php echo $Blog->Content ?>
+                        <?php echo $Blog[0]->Content ?>
                     </div>
                 </div>
 

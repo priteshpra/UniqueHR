@@ -71,9 +71,6 @@
                             <li><a href="<?php echo base_url(); ?>admin/notification" class="waves-effect waves-block waves-light"><i class="mdi-social-notifications"></i></a>
                             </li>
                         </ul>
-                        <ul class="header-project-nav right hide-on-med-and-down">
-                            <?php echo $this->ProjectCombobox; ?>
-                        </ul>
                     </div>
                 </nav>
             </div>
@@ -123,21 +120,30 @@
                                         <ul>
                                             <li><a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/banner">
                                                     Banners
-                                                </a></li>
+                                                </a>
+                                            </li>
                                             <li><a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/brand">
                                                     Brands
-                                                </a></li>
+                                                </a>
+                                            </li>
                                             <li><a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/category">
                                                     Category
-                                                </a></li>
+                                                </a>
+                                            </li>
                                             <li><a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/subcategory">
                                                     Sub Categories
-                                                </a></li>
+                                                </a>
+                                            </li>
 
                                             <li class=""> <a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/pagemaster">Page Master</a></li>
                                             <li><a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/cms">
                                                     Content Management System
-                                                </a></li>
+                                                </a>
+                                            </li>
+                                            <li><a class="wrap_content_header" href="<?php echo $this->config->item('base_url'); ?>admin/masters/section">
+                                                    Section Content
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -146,7 +152,8 @@
                                 </li>
                                 <li class="bold"><a href="<?php echo $this->config->item('base_url'); ?>admin/jobposting" class="waves-effect waves-cyan"><i class="mdi-communication-business"></i> Job Posting</a>
                                 </li>
-
+                                <li class="bold"><a href="<?php echo $this->config->item('base_url'); ?>admin/testimonial" class="waves-effect waves-cyan"><i class="mdi-communication-business"></i> Testimonial</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

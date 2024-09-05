@@ -1,17 +1,22 @@
  <!-- Begin:: Slider Section -->
- <section class="page_banner" style="background-image: url(<?php echo $this->config->item('front_assets'); ?>images/bg/blogs.jpg);">
-     <div class="container largeContainer">
-         <div class="row">
-             <div class="col-md-6">
-                 <h2 class="banner-title">Blogs</h2>
-             </div>
+ <?php if ($banner) {
+        foreach ($banner as $key => $value) { ?>
+         <section class="page_banner" style="background-image: url(<?php echo base_url() . $value->Image; ?>);">
+             <div class="container largeContainer">
+                 <div class="row">
+                     <div class="col-md-6">
+                         <h2 class="banner-title"><?php echo $value->SubTitle1; ?></h2>
+                         <h2 class="banner-title"><?php echo ($value->SubTitle2) ? $value->SubTitle2 : ''; ?></h2>
 
-         </div>
-         <div class="row">
-             <div class="banner-subtitle">The Latest in HR Trends and Best Practices</div>
-         </div>
-     </div>
- </section>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="banner-subtitle"><?php echo ($value->SubTitle3) ? $value->SubTitle3 : ''; ?></div>
+                 </div>
+             </div>
+         </section>
+ <?php }
+    } ?>
  <!-- End:: Slider Section -->
 
  <!-- Blog Start -->
