@@ -59,6 +59,9 @@ class Jobposting extends Admin_Controller
         if ($this->input->post()) {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('Title', 'Title', 'trim|required');
+            $this->form_validation->set_rules('Industry', 'Industry', 'trim|required');
+            $this->form_validation->set_rules('Experience', 'Experience', 'trim|required');
+            $this->form_validation->set_rules('Location', 'Location', 'trim|required');
             if ($this->form_validation->run() == TRUE) {
                 $url = site_url("admin/jobposting/add");
                 $config = array(
@@ -114,6 +117,9 @@ class Jobposting extends Admin_Controller
         if ($this->input->post()) {
             $this->load->library('form_validation');
             $this->form_validation->set_rules('Title', 'Title', 'trim|required');
+            $this->form_validation->set_rules('Industry', 'Industry', 'trim|required');
+            $this->form_validation->set_rules('Experience', 'Experience', 'trim|required');
+            $this->form_validation->set_rules('Location', 'Location', 'trim|required');
 
             if ($this->form_validation->run() == TRUE) {
                 $url = site_url("admin/jobposting/edit" . $ID);

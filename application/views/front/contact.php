@@ -34,6 +34,8 @@
                      <div class="ib_box"><i class="icons-telephone"></i></div>
                      <h3>Call Us For Help:</h3>
                      <p><a href="tel:+917069690700">+91 70696 90700</a></p>
+                     <p><a href="tel:7069690701">+91 70696 90701</a></p>
+                     <p><a href="tel:7069690702">+91 70696 90702</a></p>
                  </div>
              </div>
              <div class="col-lg-4 col-md-6">

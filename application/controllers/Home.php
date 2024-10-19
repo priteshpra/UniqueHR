@@ -27,7 +27,7 @@ class Home extends CI_Controller
         // die;
         $data['recaptcha_html'] = $this->recaptcha->getRecaptchaHtml();
         $data['menu'] = $menu = $this->common_model->getMenus();
-
+        $data['jobPost'] = $this->common_model->getJobData();
 
         $data['brandList'] = $this->brand_model->ListData(100, 1);
         $data['blog'] = $this->blog_model->listData(100, 1);

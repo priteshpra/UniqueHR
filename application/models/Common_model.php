@@ -420,4 +420,13 @@ class Common_model extends CI_Model
         $subCat = $query2->result();
         return $subCat;
     }
+
+    public function getJobData()
+    {
+        $query = $this->db->query("SELECT *
+                                FROM sssm_jobpost
+                                WHERE Status = 1 ORDER BY JobPostingID DESC LIMIT 10 ");
+        $catData = $query->result();
+        return $catData;
+    }
 }

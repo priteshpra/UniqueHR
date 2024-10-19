@@ -175,14 +175,48 @@
     </section>
     <!-- Appoinment End -->
     <!-- Team Start -->
-    <section class="teamSection02">
+    <!-- <section class="teamSection02">
         <div class="container largeContainer">
             <div class="row">
                 <div class="col-lg-12 text-center">
                 </div>
             </div>
         </div>
+    </section> -->
+    <section class="slider ">
+
+        <div class="testimonial-slider">
+            <?php if ($jobPost) {
+                foreach ($jobPost as $key => $value) { ?>
+                    <div class="testimonial">
+                        <h2><?php echo $value->Title ?></h2>
+                        <b style="font-size: 21px;">Industry: </b> <?php echo $value->Industry ?><br>
+                        <b style="font-size: 21px;">Experience: </b> <?php echo $value->Experience ?><br>
+                        <b style="font-size: 21px;">Location: </b> <?php echo $value->Location ?><br>
+                        <b style="font-size: 21px;">Description: </b> <?php echo (strlen($value->text) > 50) ? substr($value->text, 0, 45) . '...' : $value->text; ?>
+                    </div>
+            <?php }
+            } ?>
+        </div>
     </section>
+    <br />
+    <!-- <div class="testimonial-slider">
+        <ul class="slider">
+            <?php if ($jobPost) {
+                foreach ($jobPost as $key => $value) { ?>
+                    <li>
+                        <div class="testimonial-slider-content">
+                            <h2><?php echo $value->Title ?></h2>
+                            <b style="font-size: 21px;">Industry: </b> <?php echo $value->Industry ?><br>
+                            <b style="font-size: 21px;">Experience: </b> <?php echo $value->Experience ?><br>
+                            <b style="font-size: 21px;">Location: </b> <?php echo $value->Location ?><br>
+                            <b style="font-size: 21px;">Description: </b> <?php echo $value->text ?>
+                        </div>
+                    </li>
+            <?php }
+            } ?>
+        </ul>
+    </div> -->
     <!-- Team End -->
     <!-- Call To Action Start -->
     <section class="ctaSection">

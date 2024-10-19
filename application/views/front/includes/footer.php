@@ -6,6 +6,8 @@
          <div class="aboutWidget">
            <h5>Do you have questions? <br>Call or visit us.</h5>
            <div class="phone"><i class="twi-phone"></i><a href="tel:917069690700">+91 70696 90700</a></div>
+           <div class="phone"><i class="twi-phone"></i><a href="tel:7069690701">+91 70696 90701</a></div>
+           <div class="phone"><i class="twi-phone"></i><a href="tel:7069690702">+91 706969 0702</a></div>
            <p>C-402, 4th Floor, <br> Sumel Business Park-7, N.H.NO-8, <br> Soni Ki Chawl, Odhav,<br> Ahmedabad-382415</p>
            <a href="mailto:info@unique-hr.com">info@unique-hr.com</a>
          </div>
@@ -204,6 +206,41 @@
 
  <script src="<?php echo $this->config->item('front_assets'); ?>js/theme.js"></script>
  <!-- End Include All JS -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+ <script>
+   $(document).ready(function() {
+     $(".testimonial-slider").slick({
+       infinite: true,
+       arrows: false,
+       dots: false,
+       autoplay: true,
+       autoplaySpeed: 4000,
+       slidesToShow: 3,
+       slidesToScroll: 1,
+       prevArrow: '<button class="PrevArrow"></button>',
+       nextArrow: '<button class="NextArrow"></button>',
+       responsive: [{
+           breakpoint: 1200,
+           settings: {
+             slidesToShow: 3,
+           }
+         },
+         {
+           breakpoint: 992,
+           settings: {
+             slidesToShow: 2,
+           }
+         },
+         {
+           breakpoint: 580,
+           settings: {
+             slidesToShow: 1,
+           }
+         }
+       ]
+     });
+   })
+ </script>
  </body>
 
  </html>

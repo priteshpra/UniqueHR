@@ -14,6 +14,26 @@
                 </div>
                 <div class="input-field col s12 m6">
                     <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_enter_brand'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
+                    <input id="Industry" name="Industry" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$data->Industry; ?>" maxlength="100" />
+                    <label for="Industry">Industry</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_enter_brand'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
+                    <input id="Experience" name="Experience" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$data->Experience; ?>" maxlength="100" />
+                    <label for="Experience">Experience</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_enter_brand'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
+                    <input id="Location" name="Location" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$data->Location; ?>" maxlength="100" />
+                    <label for="Location">Location</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_enter_brand'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
+                    <input id="text" name="text" type="text" class="empty_validation_class LetterOnly" value="<?php echo @$data->text; ?>" maxlength="100" />
+                    <label for="text">Description</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <a class="tooltipped a-tooltipped" data-position="left" data-delay="50" data-tooltip="<?php echo label('msg_lbl_please_enter_brand'); ?>"><i class="<?php echo INFO_ICON_CLASS; ?>"></i></a>
                     <input id="PublishedDate" name="PublishedDate" type="text" class="empty_validation_class datepicker" value="<?php echo @$data->PublishedDate; ?>" maxlength="100" />
                     <label for="PublishedDate"><?php echo label('msg_lbl_publishdate') ?></label>
                 </div>

@@ -40,6 +40,10 @@ class Jobposting_model extends CI_Model
         $array['IPAddress'] = GetIP();
         $sql = "call usp_A_AddJobPost('" .
             $array['Title'] . "','" .
+            $array['Industry'] . "','" .
+            $array['Experience'] . "','" .
+            $array['Location'] . "','" .
+            $array['text'] . "','" .
             $array['FilePath'] . "','" .
             date('Y-m-d', strtotime($array['PublishedDate'])) . "','" .
             $array['CreatedBy'] . "','" .
@@ -60,6 +64,10 @@ class Jobposting_model extends CI_Model
         $array['IPAddress'] = GetIP();
         $sql = "call usp_A_EditJobpost('" .
             $array['Title'] . "','" .
+            $array['Industry'] . "','" .
+            $array['Experience'] . "','" .
+            $array['Location'] . "','" .
+            $array['text'] . "','" .
             $array['FilePath'] . "','" .
             date('Y-m-d', strtotime($array['PublishedDate'])) . "','" .
             $array['ModifiedBy'] . "','" .

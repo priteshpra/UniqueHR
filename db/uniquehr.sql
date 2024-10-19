@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2024 at 06:51 PM
+-- Generation Time: Oct 19, 2024 at 08:02 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -1618,7 +1618,7 @@ SELECT @LAST_ID AS ID;
 COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_A_AddJobPost` (IN `_Title` VARCHAR(200), IN `_FilePath` VARCHAR(200), IN `_PublishedDate` DATE, IN `_CreatedBy` INT, IN `_Status` INT, IN `_UserType` ENUM('Admin Web','Admin Android','Admin IOS','Employee Web','Employee Android','Employee IOS'), IN `_IPAddress` VARCHAR(16))  NO SQL BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_A_AddJobPost` (IN `_Title` VARCHAR(200), IN `_Industry` VARCHAR(200), IN `_Experience` VARCHAR(200), IN `_Location` VARCHAR(200), IN `_text` TEXT, IN `_FilePath` VARCHAR(200), IN `_PublishedDate` DATE, IN `_CreatedBy` INT, IN `_Status` INT, IN `_UserType` ENUM('Admin Web','Admin Android','Admin IOS','Employee Web','Employee Android','Employee IOS'), IN `_IPAddress` VARCHAR(16))  NO SQL BEGIN
 DECLARE admin_name VARCHAR(50);
 DECLARE EXIT handler for sqlexception
   BEGIN
@@ -1631,9 +1631,13 @@ DECLARE EXIT handler for sqlexception
   START TRANSACTION;
   SET  @TimeZone = (SELECT TimeZone  FROM sssm_config Limit 1);
 IF(@TimeZone = "") THEN SET @TimeZone = "+00:00"; END IF;
-INSERT INTO sssm_jobpost (Title,FilePath,PublishedDate,CreatedDate,CreatedBy,Status)
+INSERT INTO sssm_jobpost (Title,Industry,Experience,Location,text,FilePath,PublishedDate,CreatedDate,CreatedBy,Status)
 VALUES (
     IFNULL(_Title,''),
+    IFNULL(_Industry,''),
+    IFNULL(_Experience,''),
+    IFNULL(_Location,''),
+    IFNULL(_text,''),
     IFNULL(_FilePath,''),
     IFNULL(_PublishedDate,''),
         CONVERT_TZ(NOW(),@@session.time_zone,@TimeZone),
@@ -4878,7 +4882,7 @@ DECLARE EXIT handler for sqlexception
 COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_A_EditJobpost` (IN `_Title` VARCHAR(200), IN `_FilePath` VARCHAR(200), IN `_PublishedDate` DATE, IN `_ModifiedBy` INT, IN `_Status` INT, IN `_ID` INT, IN `_UserType` ENUM('Admin Web','Admin Android','Admin IOS'), IN `_IPAddress` VARCHAR(16))  NO SQL BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usp_A_EditJobpost` (IN `_Title` VARCHAR(200), IN `_Industry` VARCHAR(200), IN `_Experience` VARCHAR(200), IN `_Location` VARCHAR(200), IN `_text` TEXT, IN `_FilePath` VARCHAR(200), IN `_PublishedDate` DATE, IN `_ModifiedBy` INT, IN `_Status` INT, IN `_ID` INT, IN `_UserType` ENUM('Admin Web','Admin Android','Admin IOS'), IN `_IPAddress` VARCHAR(16))  NO SQL BEGIN
 DECLARE flag INT;
 DECLARE EXIT handler for sqlexception
     BEGIN
@@ -4895,6 +4899,10 @@ SET flag = (SELECT count(JobPostingID) from  sssm_jobpost WHERE  JobPostingID = 
 
 UPDATE  sssm_jobpost SET
     Title = IFNULL(_Title, ''),
+    Industry = IFNULL(_Industry,''),
+    Experience = IFNULL(_Experience,''),
+    Location = IFNULL(_Location,''),
+    text = IFNULL(_text,''),
     FilePath = IFNULL(_FilePath, ''),
     PublishedDate = IFNULL(_PublishedDate, ''),
     Status = IFNULL(_Status, 0),
@@ -8340,6 +8348,10 @@ IF(PageSize = -1) THEN
     SELECT 
       IFNULL(c.JobPostingID,0) AS JobPostingID,
       IFNULL(c.Title,'') AS Title,
+      IFNULL(c.Industry,'') AS Industry,
+      IFNULL(c.Experience,'') AS Experience,
+      IFNULL(c.Location,'') AS Location,
+      IFNULL(c.text,'') AS text,
       IFNULL(c.FilePath,'') AS FilePath,
       IFNULL(c.PublishedDate,'') AS PublishedDate,
       IFNULL(c.Status,0) AS Status
@@ -8355,6 +8367,10 @@ ELSE
               SELECT 
       IFNULL(c.JobPostingID,0) AS JobPostingID,
       IFNULL(c.Title,'') AS Title,
+      IFNULL(c.Industry,'') AS Industry,
+      IFNULL(c.Experience,'') AS Experience,
+      IFNULL(c.Location,'') AS Location,
+      IFNULL(c.text,'') AS text,
       IFNULL(c.FilePath,'') AS FilePath,
       IFNULL(c.PublishedDate,'') AS PublishedDate,
       IFNULL(c.Status,0) AS Status
@@ -17451,7 +17467,11 @@ INSERT INTO `sssm_activitylog` (`ActivityLogID`, `MethodName`, `ActivityDescript
 (255, 'EditBanner', 'unique HR has updated Banner aboutus', 'Admin Web', 2, '::1', 2, '2024-08-24 14:34:38', NULL, NULL, 1),
 (256, 'EditCMS', 'unique HR has updated CMS.', 'Admin Web', 2, '::1', 2, '2024-08-24 14:39:43', NULL, NULL, 1),
 (257, 'EditBlog', 'unique HR has updated Blog.', 'Admin Web', 2, '::1', 2, '2024-08-24 14:49:08', NULL, NULL, 1),
-(258, 'EditBanner', 'unique HR has updated Banner referencechecks', 'Admin Web', 2, '::1', 2, '2024-08-24 15:02:10', NULL, NULL, 1);
+(258, 'EditBanner', 'unique HR has updated Banner referencechecks', 'Admin Web', 2, '::1', 2, '2024-08-24 15:02:10', NULL, NULL, 1),
+(259, 'EditCMS', 'unique HR has updated CMS.', 'Admin Web', 2, '::1', 2, '2024-09-17 22:40:02', NULL, NULL, 1),
+(260, 'EditCMS', 'unique HR has updated CMS.', 'Admin Web', 2, '::1', 2, '2024-09-17 23:29:59', NULL, NULL, 1),
+(261, 'EditCMS', 'unique HR has updated CMS.', 'Admin Web', 2, '::1', 2, '2024-09-17 23:30:43', NULL, NULL, 1),
+(262, 'EditCMS', 'unique HR has updated CMS.', 'Admin Web', 2, '::1', 2, '2024-09-17 23:31:19', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -18286,7 +18306,7 @@ CREATE TABLE `sssm_cms` (
 --
 
 INSERT INTO `sssm_cms` (`CMSID`, `PageID`, `Title`, `Content`, `CreatedBy`, `CreatedDate`, `ModifiedBy`, `ModifiedDate`, `Status`) VALUES
-(3, 2, 'About us', '<!-- About Start -->\n<div class=\"abHisSection\">\n<div class=\"container largeContainer\">\n<div class=\"row\">\n<div class=\"col-lg-6\">\n<div class=\"absThumb\"><img src=\"assets/front/images/about/2.png\" alt=\"\" /></div>\n</div>\n<div class=\"col-lg-6\">\n<div class=\"abpd\">\n<div class=\"subTitle\">Welcome To Unique HR Consultancy</div>\n<h2 class=\"secTitle\">Your Trusted Partner in HR Solutions</h2>\n<p class=\"secDesc\">At Unique HR Consultancy, we\'re more than just HR consultants - we\'re strategic partners, trusted advisors, and passionate advocates for unlocking human potential. With more than 14 plus years of experience and a team of expert professionals, we help organizations like yours navigate the complexities of Human Resource(HR), drive business growth, and create workplaces where people thrive. Our approach is collaborative, innovative, and tailored to your unique needs. Let\'s work together to elevate your Human Resource(HR) and elevate your business.</p>\n<div class=\"hpAuthor\"><img class=\"author\" src=\"assets/front/images/about/1.png\" alt=\"\" />\n<p>Need help? Contact Us</p>\n<h3>(+91)70696 90700</h3>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n<!-- About End -->\n<p>&nbsp;</p>\n<!-- Funfact Start -->\n<div class=\"comFunfact\">\n<div class=\"container largeContainer\">\n<div class=\"row\">\n<div class=\"col-md-12\">\n<div class=\"funfactArea\">\n<div class=\"fact_01\">\n<h2><span class=\"counter\" data-count=\"25000\">23</span><em>k</em></h2>\n<p>Successfully placed on their <br /> desired Jobs</p>\n</div>\n<div class=\"fact_01\">\n<h2><span class=\"counter\" data-count=\"14\">13</span><em>+</em></h2>\n<p>Years we\'ve proudly served<br /> our community</p>\n</div>\n<div class=\"fact_01\">\n<h2><span class=\"counter\" data-count=\"99000\">90</span><em>%</em></h2>\n<p>Client Retention rate,<br /> a testament to our efforts</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n<!-- Funfact End -->\n<p>&nbsp;</p>\n<!-- Word Process Start -->\n<div class=\"comHistorySec\">\n<div class=\"container largeContainer\">\n<div class=\"row\">\n<div class=\"col-lg-12 text-center\">\n<div class=\"subTitle\">History</div>\n<h2 class=\"secTitle\">Company History</h2>\n</div>\n</div>\n<div class=\"row\">\n<div class=\"col-lg-12\">\n<div class=\"historyWrapper\">\n<div class=\"bars\">&nbsp;</div>\n<div class=\"historyItem\">\n<div class=\"row\">\n<div class=\"col-md-6\">\n<h2>2010</h2>\n</div>\n<div class=\"col-md-6\">\n<div class=\"historyContent\"><img src=\"assets/front/images/about/6.jpg\" alt=\"\" />\n<div class=\"hcinner\"><span>01</span>\n<h3>Founded Company</h3>\n<p>Unique HR Consultancy was founded in 2010 with a vision to revolutionize how organizations approach human resources.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n<div class=\"historyItem reverse\">\n<div class=\"row\">\n<div class=\"col-md-6\">\n<div class=\"historyContent\"><img src=\"assets/front/images/about/7.jpg\" alt=\"\" />\n<div class=\"hcinner\"><span>02</span>\n<h3>Scaling and Success</h3>\n<p>With a strong foundation built on trust, expertise, and innovation, we set out to deliver exceptional services.</p>\n</div>\n</div>\n</div>\n<div class=\"col-md-6\">\n<h2>2014</h2>\n</div>\n</div>\n</div>\n<div class=\"historyItem\">\n<div class=\"row\">\n<div class=\"col-md-6\">\n<h2>2018</h2>\n</div>\n<div class=\"col-md-6\">\n<div class=\"historyContent\"><img src=\"assets/front/images/about/8.jpg\" alt=\"\" />\n<div class=\"hcinner\"><span>03</span>\n<h3>Maturity and Excellence</h3>\n<p>Through our dedication and commitment, we have established ourselves as a trusted partner for businesses seeking to elevate their HR functions and drive success.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n<div class=\"abHisSection\">\n<div class=\"historyItem reverse\">\n<div class=\"row\">\n<div class=\"col-md-6\">\n<div class=\"historyContent\"><img src=\"assets/front/images/about/9.jpg\" alt=\"\" />\n<div class=\"hcinner\"><span>04</span>\n<h3>Pinnacle and Progress</h3>\n<p>Our team has grown to include industry experts and thought leaders, enabling us to deliver innovative solutions that meet the evolving needs of our clients.</p>\n</div>\n</div>\n</div>\n<div class=\"col-md-6\">\n<h2>2021</h2>\n</div>\n</div>\n</div>\n<div class=\"historyItem\">\n<div class=\"row\">\n<div class=\"col-md-6\">\n<h2>2024</h2>\n</div>\n<div class=\"col-md-6\">\n<div class=\"historyContent\"><img src=\"assets/front/images/about/10.jpg\" alt=\"\" />\n<div class=\"hcinner\"><span>05</span>\n<h3>Excellence and Innovation</h3>\n<p>Our commitment to excellence has earned us recognition as a leading HR solutions provider, we continue to push the boundaries of what\'s possible in the world of HR.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n<!-- Word Process End -->', 1, '2017-12-06 16:51:32', 2, '2024-08-24 14:39:43', 1),
+(3, 2, 'About us', '<!-- About Start -->\r\n<div class=\"abHisSection\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-6\">\r\n<div class=\"absThumb\"><img src=\"assets/front/images/about/2.png\" alt=\"\" /></div>\r\n</div>\r\n<div class=\"col-lg-6\">\r\n<div class=\"abpd\">\r\n<div class=\"subTitle\">Welcome To Unique HR Consultancy</div>\r\n<h2 class=\"secTitle\">Your Trusted Partner in HR Solutions</h2>\r\n<p class=\"secDesc\">At Unique HR Consultancy, we\'re more than just HR consultants - we\'re strategic partners, trusted advisors, and passionate advocates for unlocking human potential. With more than 14 plus years of experience and a team of expert professionals, we help organizations like yours navigate the complexities of Human Resource(HR), drive business growth, and create workplaces where people thrive. Our approach is collaborative, innovative, and tailored to your unique needs. Let\'s work together to elevate your Human Resource(HR) and elevate your business.</p>\r\n<div class=\"hpAuthor\"><img class=\"author\" src=\"assets/front/images/about/1.png\" alt=\"\" />\r\n<p>Need help? Contact Us</p>\r\n<h3>(+91)70696 90700</h3>\r\n<h3>(+91)70696 90701</h3>\r\n<h3>(+91)70696 90702</h3>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- About End -->\r\n<p>&nbsp;</p>\r\n<!-- Funfact Start -->\r\n<div class=\"comFunfact\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row\">\r\n<div class=\"col-md-12\">\r\n<div class=\"funfactArea\">\r\n<div class=\"fact_01\">\r\n<h2><span class=\"counter\" data-count=\"25000\">23</span><em>k</em></h2>\r\n<p>Successfully placed on their <br /> desired Jobs</p>\r\n</div>\r\n<div class=\"fact_01\">\r\n<h2><span class=\"counter\" data-count=\"14\">13</span><em>+</em></h2>\r\n<p>Years we\'ve proudly served<br /> our community</p>\r\n</div>\r\n<div class=\"fact_01\">\r\n<h2><span class=\"counter\" data-count=\"99000\">90</span><em>%</em></h2>\r\n<p>Client Retention rate,<br /> a testament to our efforts</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- Funfact End -->\r\n<p>&nbsp;</p>\r\n<!-- Word Process Start -->\r\n<div class=\"comHistorySec\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-12 text-center\">\r\n<div class=\"subTitle\">History</div>\r\n<h2 class=\"secTitle\">Company History</h2>\r\n</div>\r\n</div>\r\n<div class=\"row\">\r\n<div class=\"col-lg-12\">\r\n<div class=\"historyWrapper\">\r\n<div class=\"bars\">&nbsp;</div>\r\n<div class=\"historyItem\">\r\n<div class=\"row\">\r\n<div class=\"col-md-6\">\r\n<h2>2010</h2>\r\n</div>\r\n<div class=\"col-md-6\">\r\n<div class=\"historyContent\"><img src=\"assets/front/images/about/6.jpg\" alt=\"\" />\r\n<div class=\"hcinner\"><span>01</span>\r\n<h3>Founded Company</h3>\r\n<p>Unique HR Consultancy was founded in 2010 with a vision to revolutionize how organizations approach human resources.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"historyItem reverse\">\r\n<div class=\"row\">\r\n<div class=\"col-md-6\">\r\n<div class=\"historyContent\"><img src=\"assets/front/images/about/7.jpg\" alt=\"\" />\r\n<div class=\"hcinner\"><span>02</span>\r\n<h3>Scaling and Success</h3>\r\n<p>With a strong foundation built on trust, expertise, and innovation, we set out to deliver exceptional services.</p>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-md-6\">\r\n<h2>2014</h2>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"historyItem\">\r\n<div class=\"row\">\r\n<div class=\"col-md-6\">\r\n<h2>2018</h2>\r\n</div>\r\n<div class=\"col-md-6\">\r\n<div class=\"historyContent\"><img src=\"assets/front/images/about/8.jpg\" alt=\"\" />\r\n<div class=\"hcinner\"><span>03</span>\r\n<h3>Maturity and Excellence</h3>\r\n<p>Through our dedication and commitment, we have established ourselves as a trusted partner for businesses seeking to elevate their HR functions and drive success.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"abHisSection\">\r\n<div class=\"historyItem reverse\">\r\n<div class=\"row\">\r\n<div class=\"col-md-6\">\r\n<div class=\"historyContent\"><img src=\"assets/front/images/about/9.jpg\" alt=\"\" />\r\n<div class=\"hcinner\"><span>04</span>\r\n<h3>Pinnacle and Progress</h3>\r\n<p>Our team has grown to include industry experts and thought leaders, enabling us to deliver innovative solutions that meet the evolving needs of our clients.</p>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-md-6\">\r\n<h2>2021</h2>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"historyItem\">\r\n<div class=\"row\">\r\n<div class=\"col-md-6\">\r\n<h2>2024</h2>\r\n</div>\r\n<div class=\"col-md-6\">\r\n<div class=\"historyContent\"><img src=\"assets/front/images/about/10.jpg\" alt=\"\" />\r\n<div class=\"hcinner\"><span>05</span>\r\n<h3>Excellence and Innovation</h3>\r\n<p>Our commitment to excellence has earned us recognition as a leading HR solutions provider, we continue to push the boundaries of what\'s possible in the world of HR.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- Word Process End -->', 1, '2017-12-06 16:51:32', 2, '2024-09-17 23:31:19', 1),
 (5, 3, 'Blogs', '<p class=\"h4\"><span style=\"font-size: medium;\">Palasa  is young &amp; fresh and is built on two strong beliefs. One is &lsquo;Practicality&rsquo; and the other is what it&rsquo;s tagline says,&nbsp;&lsquo;Constructing Fortunes&rsquo;.</span></p>\n<p><span style=\"font-size: medium;\">Practicality by a sense of design detailing and simple measures taken to ensure ease of use for all. The function is definitely given priority over form, fancy materials or fad -based ideas.</span></p>', 2, '2024-07-24 23:06:50', 2, '2024-07-30 18:42:15', 1),
 (6, 7, 'Privacy Policy', '<!-- Service Detailss Start -->\r\n<div class=\"singleServicePage\" style=\"margin-bottom: -100px;\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row\">\r\n<div class=\"col-xl-12\">\r\n<div class=\"ssContent\">\r\n<div class=\"subTitle\">Protecting Your Data</div>\r\n<h2 class=\"secTitle\">Expert Recruitment Solution for Manufacturing Excellence</h2>\r\n<p>We at Unique HR Consultancy value the privacy of our clients, candidates, and website users. We gather, use, and safeguard personal information in accordance with our privacy policy.</p>\r\n<p><strong>Data Collection</strong> <br /> <br /> We collect personal data from candidates, including: <br /> <br /> - Contact information (name, email, phone number) <br /> - Resume and CV information <br /> - Job preferences and search criteria <br /> - Interview and assessment results <br /> <br /> We also collect data from clients, including: <br /> - Company information (name, address, contact details) <br /> - Job descriptions and requirements <br /> - Recruitment needs and preferences </p>\r\n<p><strong>Data Use</strong> We use personal data to: <br /> <br /> - Match candidates with job openings <br /> - Provide recruitment services to clients <br /> - Improve our website and services <br /> - Communicate with candidates and clients <br /> <strong>Data Protection</strong> <br /><br /> We protect personal data by: <br /> - Storing data securely on our servers <br /> - Limiting access to authorized personnel <br /> - Using encryption and firewalls <br /> - Implementing data backup and disaster recovery procedures</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- Services Details End -->\r\n<p>&nbsp;</p>\r\n<!-- Related Service Start -->\r\n<div class=\"relatedService\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row rlsContent\">\r\n<div class=\"col-lg-12\">\r\n<h2>Contact Us</h2>\r\n<p>If you have questions or concerns about our privacy policy, please contact us at info@unique-hr.com or +917383357731.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- Related Service End -->\r\n<p>&nbsp;</p>', 2, '2024-07-30 20:11:26', 2, '2024-08-13 23:26:49', 1),
 (7, 8, 'Recruitment', '<!-- Service Detailss Start -->\r\n<section class=\"singleServicePage\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row\">\r\n<div class=\"col-xl-6\">\r\n<div class=\"ssThumb\"><img src=\"assets/front/images/single-service/1.jpg\" alt=\"\" /></div>\r\n</div>\r\n<div class=\"col-xl-6\">\r\n<div class=\"ssContent\">\r\n<div class=\"subTitle\">Recruitment Agencies Ahmedabad</div>\r\n<h2 class=\"secTitle\">Recruiting firm in Ahmedabad focused on results</h2>\r\n<p>Here at Unique HR Consultancy, we pride ourselves on being one of Ahmedabad\'s best placement agencies, offering our clients in a variety of industries exceptional recruitment solutions. Being the top recruitment agency in Ahmedabad, we excel at bringing exceptional people together with prestigious companies to build lasting relationships and accelerate company expansion.</p>\r\n<p>With years of experience, we have become Ahmedabad\'s Leading Job Consultancy, utilizing our wide network and industry knowledge to provide outstanding outcomes. With their expertise in finding and luring top personnel, our team of seasoned recruiters guarantees flawless Manpower Recruitment Agency services that both meet and surpass client expectations.</p>\r\n<p>At Unique HR Consultancy, upholding the highest levels of professionalism, preserving confidentiality, and fostering solid partnerships are our top priorities. Our innovative hiring practises and in-depth industry understanding allow us to provide top talent that propels company growth.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</section>\r\n<!-- Services Details End --> <!-- Word Process Start -->\r\n<section class=\"ssprcessSec\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-12 text-center\">\r\n<div class=\"subTitle\"><span class=\"bleft\"></span>Process<span class=\"bright\"></span></div>\r\n<h2 class=\"secTitle\">How We <span>Works</span></h2>\r\n</div>\r\n</div>\r\n<div class=\"row\">\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_1\"></i><span>01</span></div>\r\n<h3>Company Visit</h3>\r\n<p>Visit the company to learn about the potential for strategic talent acquisition and the demands for recruitment.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\" icon-local_3\"></i><span>02</span></div>\r\n<h3>Identifying Needs</h3>\r\n<p>Discussing requirements, expectations, and essential abilities for available Job description.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_9\"></i><span>03</span></div>\r\n<h3>Job Description</h3>\r\n<p>Outlining essential duties, responsibilities, and requirements for optimal candidate matching.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_7\"></i><span>04</span></div>\r\n<h3>Talent Search</h3>\r\n<p>Focusing on qualified candidates who meet the job requirements to ensure a smooth hiring process.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_7\"></i><span>05</span></div>\r\n<h3>Shortlisting</h3>\r\n<p>Choosing the best applicants based on their culture, experience, and skill set for interviews.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_7\"></i><span>06</span></div>\r\n<h3>Interviewing</h3>\r\n<p>Evaluating candidates\' abilities, passion, and fit through in-depth discussions during interviewing.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_7\"></i><span>07</span></div>\r\n<h3>Offer Employment</h3>\r\n<p>Making compelling employment offers to chosen applicants, increasing the acceptance rate.</p>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-3 col-md-6 text-center\">\r\n<div class=\"icon_box_03\">\r\n<div class=\"ib_box\"><i class=\"icon-local_7\"></i><span>08</span></div>\r\n<h3>Induction</h3>\r\n<p>Ensuring new hires have a thorough onboarding process that positions them for success.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</section>\r\n<!-- Word Process End --> <!-- Related Service Start -->\r\n<section class=\"relatedService\">\r\n<div class=\"container largeContainer\">\r\n<div class=\"row rlsContent\">\r\n<div class=\"col-lg-12\">\r\n<h2>Inquiring in hiring a Manpower Recruitment Agency</h2>\r\n<p>Using our vast network and industry knowledge, we have become Ahmedabad\'s Top Job Consultancy over the years thanks to our years of experience producing outstanding results. Our skilled team of recruiters is adept at identifying and attracting top personnel, resulting in smooth Manpower Recruitment Agency services that both meet and surpass client expectations.</p>\r\n<p>We pride ourselves on our customized approach, which recognizes the particular needs and demands of every client. We offering a wide range of industry-specific services, including executive search, contract staffing, temporary staffing, and permanent staffing.</p>\r\n<p>Experience the unique difference that makes us stand out by putting your trust in us as your recruitment partner in Ahmedabad. See why we are Ahmedabad\'s top choice for recruitment agencies by letting us assist you in finding the ideal applicant or employment opportunity.</p>\r\n</div>\r\n</div>\r\n</div>\r\n</section>\r\n<!-- Related Service End -->', 2, '2024-08-11 11:38:10', 2, '2024-08-24 13:31:36', 1),
@@ -19085,6 +19105,10 @@ INSERT INTO `sssm_group` (`GroupID`, `GroupName`, `CreatedBy`, `CreatedDate`, `M
 CREATE TABLE `sssm_jobpost` (
   `JobPostingID` int(11) NOT NULL,
   `Title` varchar(200) NOT NULL,
+  `Industry` varchar(250) DEFAULT NULL,
+  `Experience` varchar(250) DEFAULT NULL,
+  `Location` varchar(250) DEFAULT NULL,
+  `text` text DEFAULT NULL,
   `FilePath` varchar(200) NOT NULL,
   `PublishedDate` date NOT NULL,
   `CreatedBy` int(11) NOT NULL,
@@ -19098,9 +19122,10 @@ CREATE TABLE `sssm_jobpost` (
 -- Dumping data for table `sssm_jobpost`
 --
 
-INSERT INTO `sssm_jobpost` (`JobPostingID`, `Title`, `FilePath`, `PublishedDate`, `CreatedBy`, `CreatedDate`, `ModifiedBy`, `ModifiedDate`, `Status`) VALUES
-(1, 'JOb One', '20240725155927_.png', '2024-07-25', 2, '2024-07-25 19:29:27', NULL, NULL, 1),
-(2, 'JOb Two', '20240731100321_.jpg', '2024-07-31', 2, '2024-07-31 13:33:21', NULL, NULL, 1);
+INSERT INTO `sssm_jobpost` (`JobPostingID`, `Title`, `Industry`, `Experience`, `Location`, `text`, `FilePath`, `PublishedDate`, `CreatedBy`, `CreatedDate`, `ModifiedBy`, `ModifiedDate`, `Status`) VALUES
+(1, 'Software Developer', 'IT', '2-3 Years', 'Pune', 'We are looking for software developer', '20240725155927_.png', '2024-07-25', 2, '2024-07-25 19:29:27', NULL, NULL, 1),
+(2, 'Job Two', 'IT', '5-6 Years', 'Mumbai', 'We are looking for QA', '20240731100321_.jpg', '2024-07-31', 2, '2024-07-31 13:33:21', NULL, NULL, 1),
+(3, 'Job Three', 'IT', '1-2 Years', 'Mumbai', 'We are looking for QA', '20240731100321_.jpg', '2024-07-31', 2, '2024-07-31 13:33:21', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -23308,7 +23333,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `sssm_activitylog`
 --
 ALTER TABLE `sssm_activitylog`
-  MODIFY `ActivityLogID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
+  MODIFY `ActivityLogID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
 
 --
 -- AUTO_INCREMENT for table `sssm_admindetails`
@@ -23452,7 +23477,7 @@ ALTER TABLE `sssm_group`
 -- AUTO_INCREMENT for table `sssm_jobpost`
 --
 ALTER TABLE `sssm_jobpost`
-  MODIFY `JobPostingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `JobPostingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sssm_messages`
