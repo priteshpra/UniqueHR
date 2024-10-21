@@ -64,15 +64,15 @@
                      <h3>Send Us a Message</h3>
                      <form action="<?php echo base_url('contact/sendEmail') ?>" method="post" class="row" id="contact_forms" enctype="multipart/form-data">
                          <div class="input-field col-md-6">
-                             <input class="required" type="text" name="con_firstname" placeholder="First Name" tabindex="1">
+                             <input class="required" type="text" name="con_firstname" maxlength="50" placeholder="First Name" tabindex="1">
                              <span style="color: red;"><?php echo form_error('con_firstname'); ?></span>
                          </div>
                          <div class="input-field col-md-6">
-                             <input class="required" type="text" name="con_lastname" placeholder="Last Name" tabindex="2">
+                             <input class="required" type="text" maxlength="50" name="con_lastname" placeholder="Last Name" tabindex="2">
                              <span style="color: red;"><?php echo form_error('con_lastname'); ?></span>
                          </div>
                          <div class="input-field col-md-6">
-                             <input class="required" type="text" name="con_contact" id="con_contact" placeholder="Contact Number" tabindex="3">
+                             <input class="required" type="text" name="con_contact" onkeydown="return onlyNumbers(event)" id="con_contact" maxlength="10" minlength="10" placeholder="Contact Number" tabindex="3">
                              <span style="color: red;"><?php echo form_error('con_contact'); ?></span>
                          </div>
                          <div class="input-field col-md-6">
@@ -120,3 +120,31 @@
  </section>
  <!-- Contact Map End -->
  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+ <script>
+    function onlyNumbers(e){
+    var keynum;
+    var keychar;
+
+    if(window.event){  //IE
+        keynum = e.keyCode;
+    }
+    if(e.which){ //Netscape/Firefox/Opera
+        keynum = e.which;
+    }
+    if((keynum == 8 || keynum == 9 || keynum == 46 || (keynum >= 35 && keynum <= 40) ||
+       (event.keyCode >= 96 && event.keyCode <= 105)))return true;
+
+    if(keynum == 110 || keynum == 190){
+        var checkdot=document.getElementById('price').value;
+        var i=0;
+        for(i=0;i<checkdot.length;i++){
+            if(checkdot[i]=='.')return false;
+        }
+        if(checkdot.length==0)document.getElementById('price').value='0';
+        return true;
+    }
+    keychar = String.fromCharCode(keynum);
+
+    return !isNaN(keychar);
+}
+ </script>

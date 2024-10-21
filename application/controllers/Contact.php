@@ -188,7 +188,7 @@ class Contact extends CI_Controller
 
             $from = $mailData['con_email'];
 
-            $fromName = isset($formData['con_firstname']) ? $formData['con_firstname'] : '' . ' ' . isset($formData['con_lastname']) ?$formData['con_lastname'] : '';
+            $fromName = isset($formData['con_firstname']) ? $formData['con_firstname'] : '' . ' ' . (isset($formData['con_lastname']) ?$formData['con_lastname'] : '');
 
             $mailSubject = 'Contact Request Submitted by ' . isset($formData['con_firstname'])?$formData['con_firstname'] : '';
 
@@ -196,9 +196,7 @@ class Contact extends CI_Controller
 
             // Mail content
 
-            $mailContent = '
-
-    <h2>Contact Request Submitted</h2>
+            $mailContent = '<h2>Contact Request Submitted</h2>
 
     <p><b>First Name: </b>' . isset($formData['con_firstname']) ? $formData['con_firstname'] : '' . '</p>
 
@@ -210,9 +208,7 @@ class Contact extends CI_Controller
 
     <p><b>File Url: </b><a href="' . base_url("assets/uploads/resume/") . $formData["filename"] . '">' . $formData['filename'] . '</a></p>
 
-    <p><b>Message: </b>' . isset($formData['con_intro']) ? $formData['con_intro'] : '' . '</p>
-
-';
+    <p><b>Message: </b>' . isset($formData['con_intro']) ? $formData['con_intro'] : '' . '</p>';
 
             $config = array(
 
