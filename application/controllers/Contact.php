@@ -139,7 +139,7 @@ class Contact extends CI_Controller
             $config['allowed_types'] = 'doc|docx|pdf';
 
             $config['max_size']      = 10024;
-
+            $config['file_name'] = 'resume_'.$mailData['con_firstname'].'_'.time();
 
 
             $this->load->library('upload');
